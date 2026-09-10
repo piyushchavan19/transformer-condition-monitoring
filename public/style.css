@@ -1,0 +1,333 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #eef2f7;
+    color: #1e293b;
+}
+
+header {
+    background: #0f172a;
+    color: white;
+    padding: 22px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 25px;
+}
+
+header p {
+    margin: 5px 0 0;
+    color: #cbd5e1;
+}
+
+.dashboard {
+    width: 94%;
+    max-width: 1400px;
+    margin: 25px auto;
+}
+
+.status-box {
+    background: white;
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+}
+
+.status-title {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.status {
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-weight: bold;
+}
+
+.normal {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.warning {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.critical {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.section-title {
+    margin: 25px 0 15px;
+    font-size: 20px;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+}
+
+.card {
+    background: white;
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+}
+
+.card h3 {
+    margin: 0 0 15px;
+    font-size: 15px;
+    color: #64748b;
+}
+
+.value {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.unit {
+    color: #64748b;
+    margin-top: 5px;
+}
+
+.graph-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.graph-card {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+}
+
+.graph-card h3 {
+    margin-top: 0;
+}
+
+canvas {
+    width: 100% !important;
+    height: 300px !important;
+}
+
+footer {
+    text-align: center;
+    margin: 30px;
+    color: #64748b;
+}
+
+@media (max-width: 900px) {
+    .cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .graph-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 550px) {
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    header {
+        display: block;
+        text-align: center;
+    }
+
+    .status-box {
+        display: block;
+        text-align: center;
+    }
+
+    .status {
+        display: inline-block;
+        margin-top: 10px;
+    }
+}
+/* CONDITION SIMULATOR */
+
+.simulator {
+
+    background: white;
+
+    padding: 25px;
+
+    border-radius: 14px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 20px;
+
+    align-items: end;
+
+    box-shadow:
+        0 3px 12px rgba(0,0,0,0.08);
+
+}
+
+
+.sim-input {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+
+}
+
+
+.sim-input label {
+
+    font-weight: bold;
+
+    color: #475569;
+
+}
+
+
+.sim-input input {
+
+    padding: 12px;
+
+    border: 1px solid #cbd5e1;
+
+    border-radius: 8px;
+
+    font-size: 16px;
+
+}
+
+
+.simulator button {
+
+    grid-column: 1 / -1;
+
+    padding: 14px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #2563eb;
+
+    color: white;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+}
+
+
+.simulator button:hover {
+
+    background: #1d4ed8;
+
+}
+
+
+/* CONDITION RULES */
+
+.rules {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 20px;
+
+}
+
+
+.rule {
+
+    background: white;
+
+    padding: 20px;
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 3px 12px rgba(0,0,0,0.08);
+
+}
+
+
+.rule h3 {
+
+    margin-top: 0;
+
+}
+
+
+.rule p {
+
+    margin: 8px 0;
+
+    color: #475569;
+
+}
+
+
+.normal-rule {
+
+    border-left: 6px solid #22c55e;
+
+}
+
+
+.warning-rule {
+
+    border-left: 6px solid #f59e0b;
+
+}
+
+
+.critical-rule {
+
+    border-left: 6px solid #ef4444;
+
+}
+
+
+@media (max-width: 900px) {
+
+    .simulator {
+
+        grid-template-columns: 1fr;
+
+    }
+
+    .rules {
+
+        grid-template-columns: 1fr;
+
+    }
+
+}
