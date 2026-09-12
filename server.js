@@ -7,37 +7,30 @@ app.use(express.json());
 app.use(express.static("public"));
 
 let latestData = {
-    oilTemperature: 65,
-    windingTemperature: 72,
-    vibration: 2.5,
-
-    voltageR: 11000,
-    voltageY: 11000,
-    voltageB: 11000,
-
-    currentR: 40,
-    currentY: 41,
-    currentB: 39,
-
+    voltage: 230,
+    current: 3.5,
+    temperature: 45,
+    vibration: 2.0,
+    speed: 1440,
     status: "NORMAL"
 };
 
 
-// CONDITION RULE
-function calculateStatus(oil, winding, vibration) {
+// CONDITION RULES
+function calculateStatus(temperature, vibration, current) {
 
     if (
-        oil > 85 ||
-        winding > 95 ||
-        vibration > 7
+        temperature > 80 ||
+        vibration > 7 ||
+        current > 6
     ) {
         return "CRITICAL";
     }
 
     if (
-        oil >= 70 ||
-        winding >= 80 ||
-        vibration >= 4
+        temperature >= 65 ||
+        vibration >= 4 ||
+        current >= 5
     ) {
         return "WARNING";
     }
@@ -46,41 +39,63 @@ function calculateStatus(oil, winding, vibration) {
 }
 
 
-// GET DATA
+// GET MOTOR DATA
 app.get("/api/data", (req, res) => {
-
     res.json(latestData);
-
 });
 
 
-// CONDITION SIMULATOR
+// SIMULATE MOTOR CONDITION
 app.post("/api/simulate", (req, res) => {
 
-    const oil = Number(req.body.oilTemperature);
-    const winding = Number(req.body.windingTemperature);
+    const voltage = Number(req.body.voltage);
+    const current = Number(req.body.current);
+    const temperature = Number(req.body.temperature);
     const vibration = Number(req.body.vibration);
+    const speed = Number(req.body.speed);
 
     const status = calculateStatus(
-        oil,
-        winding,
-        vibration
+        temperature,
+        vibration,
+        current
     );
 
-    latestData.oilTemperature = oil;
-    latestData.windingTemperature = winding;
-    latestData.vibration = vibration;
-    latestData.status = status;
+    latestData = {
+        voltage,
+        current,
+        temperature,
+        vibration,
+        speed,
+        status
+    };
 
     res.json(latestData);
-
 });
 
 
-app.listen(PORT, () => {
+// MATLAB / ESP32 DATA INPUT
+app.post("/api/motor", (req, res) => {
 
-    console.log(
-        `Transformer Monitoring Server running at http://localhost:${PORT}`
+    latestData = {
+        ...latestData,
+        ...req.body
+    };
+
+    latestData.status = calculateStatus(
+        Number(latestData.temperature),
+        Number(latestData.vibration),
+        Number(latestData.current)
     );
 
+    res.json({
+        success: true,
+        data: latestData
+    });
+});
+
+
+app.listen(PORT, "0.0.0.0", () => {
+    console.log(
+        `Motor Monitoring Server running on port ${PORT}`
+    );
 });

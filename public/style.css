@@ -1,333 +1,235 @@
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-    margin: 0;
     font-family: Arial, sans-serif;
-    background: #eef2f7;
-    color: #1e293b;
+    background: #f2f5f8;
+    color: #222;
 }
 
+
+/* HEADER */
+
 header {
-    background: #0f172a;
+    background: #17202a;
     color: white;
-    padding: 22px 5%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    text-align: center;
+    padding: 28px 15px;
 }
 
 header h1 {
-    margin: 0;
-    font-size: 25px;
+    font-size: 30px;
+    margin-bottom: 8px;
 }
 
 header p {
-    margin: 5px 0 0;
-    color: #cbd5e1;
+    font-size: 16px;
 }
 
-.dashboard {
-    width: 94%;
-    max-width: 1400px;
+
+/* MAIN */
+
+main {
+    width: 92%;
+    max-width: 1200px;
     margin: 25px auto;
 }
 
-.status-box {
+section {
     background: white;
-    border-radius: 14px;
-    padding: 20px;
-    margin-bottom: 22px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    padding: 22px;
+    margin-bottom: 25px;
+    border-radius: 12px;
     box-shadow: 0 3px 12px rgba(0,0,0,0.08);
 }
 
-.status-title {
-    font-size: 18px;
-    font-weight: bold;
+section h2 {
+    margin-bottom: 20px;
+    color: #17202a;
+}
+
+
+/* HEALTH */
+
+.health-section {
+    text-align: center;
 }
 
 .status {
-    padding: 10px 20px;
-    border-radius: 25px;
+    display: inline-block;
+    padding: 15px 50px;
+    border-radius: 30px;
+    font-size: 25px;
     font-weight: bold;
+    margin: 10px;
 }
 
-.normal {
-    background: #dcfce7;
-    color: #166534;
+.status.normal {
+    background: #d4edda;
+    color: #155724;
 }
 
-.warning {
-    background: #fef3c7;
-    color: #92400e;
+.status.warning {
+    background: #fff3cd;
+    color: #856404;
 }
 
-.critical {
-    background: #fee2e2;
-    color: #991b1b;
+.status.critical {
+    background: #f8d7da;
+    color: #721c24;
 }
 
-.section-title {
-    margin: 25px 0 15px;
-    font-size: 20px;
-}
+
+/* CARDS */
 
 .cards {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 18px;
 }
 
 .card {
-    background: white;
-    border-radius: 14px;
-    padding: 20px;
-    box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+    background: #f8f9fa;
+    padding: 25px 15px;
+    text-align: center;
+    border-radius: 10px;
+    border: 1px solid #ddd;
 }
 
 .card h3 {
-    margin: 0 0 15px;
-    font-size: 15px;
-    color: #64748b;
+    margin-bottom: 12px;
 }
 
 .value {
-    font-size: 30px;
+    font-size: 28px;
     font-weight: bold;
 }
 
-.unit {
-    color: #64748b;
-    margin-top: 5px;
+
+/* SIMULATOR */
+
+.simulator {
+    background: #eef5ff;
 }
 
-.graph-container {
+.inputs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.inputs label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 7px;
+}
+
+.inputs input {
+    width: 100%;
+    padding: 11px;
+    border: 1px solid #bbb;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+.simulator button {
+    padding: 13px 25px;
+    border: none;
+    border-radius: 7px;
+    background: #17202a;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.simulator button:hover {
+    opacity: 0.85;
+}
+
+
+/* RULES */
+
+.rules {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px;
+}
+
+.rule {
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.rule h3 {
+    margin-bottom: 12px;
+}
+
+.rule p {
+    margin: 7px 0;
+}
+
+.normal-rule {
+    background: #d4edda;
+}
+
+.warning-rule {
+    background: #fff3cd;
+}
+
+.critical-rule {
+    background: #f8d7da;
+}
+
+
+/* CHARTS */
+
+.charts {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
 }
 
-.graph-card {
-    background: white;
-    padding: 20px;
-    border-radius: 14px;
-    box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+.chart-card {
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
 }
 
-.graph-card h3 {
-    margin-top: 0;
+.chart-card h3 {
+    margin-bottom: 15px;
 }
 
-canvas {
-    width: 100% !important;
-    height: 300px !important;
-}
+
+/* FOOTER */
 
 footer {
     text-align: center;
-    margin: 30px;
-    color: #64748b;
+    background: #17202a;
+    color: white;
+    padding: 20px;
+    margin-top: 30px;
 }
 
-@media (max-width: 900px) {
-    .cards {
-        grid-template-columns: repeat(2, 1fr);
+
+/* MOBILE */
+
+@media (max-width: 700px) {
+
+    header h1 {
+        font-size: 22px;
     }
 
-    .graph-container {
+    .charts {
         grid-template-columns: 1fr;
-    }
-}
-
-@media (max-width: 550px) {
-    .cards {
-        grid-template-columns: 1fr;
-    }
-
-    header {
-        display: block;
-        text-align: center;
-    }
-
-    .status-box {
-        display: block;
-        text-align: center;
     }
 
     .status {
-        display: inline-block;
-        margin-top: 10px;
-    }
-}
-/* CONDITION SIMULATOR */
-
-.simulator {
-
-    background: white;
-
-    padding: 25px;
-
-    border-radius: 14px;
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(3, 1fr);
-
-    gap: 20px;
-
-    align-items: end;
-
-    box-shadow:
-        0 3px 12px rgba(0,0,0,0.08);
-
-}
-
-
-.sim-input {
-
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 8px;
-
-}
-
-
-.sim-input label {
-
-    font-weight: bold;
-
-    color: #475569;
-
-}
-
-
-.sim-input input {
-
-    padding: 12px;
-
-    border: 1px solid #cbd5e1;
-
-    border-radius: 8px;
-
-    font-size: 16px;
-
-}
-
-
-.simulator button {
-
-    grid-column: 1 / -1;
-
-    padding: 14px;
-
-    border: none;
-
-    border-radius: 8px;
-
-    background: #2563eb;
-
-    color: white;
-
-    font-size: 16px;
-
-    font-weight: bold;
-
-    cursor: pointer;
-
-}
-
-
-.simulator button:hover {
-
-    background: #1d4ed8;
-
-}
-
-
-/* CONDITION RULES */
-
-.rules {
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(3, 1fr);
-
-    gap: 20px;
-
-}
-
-
-.rule {
-
-    background: white;
-
-    padding: 20px;
-
-    border-radius: 14px;
-
-    box-shadow:
-        0 3px 12px rgba(0,0,0,0.08);
-
-}
-
-
-.rule h3 {
-
-    margin-top: 0;
-
-}
-
-
-.rule p {
-
-    margin: 8px 0;
-
-    color: #475569;
-
-}
-
-
-.normal-rule {
-
-    border-left: 6px solid #22c55e;
-
-}
-
-
-.warning-rule {
-
-    border-left: 6px solid #f59e0b;
-
-}
-
-
-.critical-rule {
-
-    border-left: 6px solid #ef4444;
-
-}
-
-
-@media (max-width: 900px) {
-
-    .simulator {
-
-        grid-template-columns: 1fr;
-
-    }
-
-    .rules {
-
-        grid-template-columns: 1fr;
-
+        font-size: 20px;
+        padding: 12px 35px;
     }
 
 }

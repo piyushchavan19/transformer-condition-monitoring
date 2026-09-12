@@ -6,496 +6,279 @@
     <meta charset="UTF-8">
 
     <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
+          content="width=device-width, initial-scale=1.0">
 
-    <title>Transformer Condition Monitoring</title>
+    <title>Induction Motor Condition Monitoring</title>
 
     <link rel="stylesheet" href="style.css">
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 </head>
-
 
 <body>
 
-
 <header>
 
-    <div>
+    <h1>⚡ Induction Motor Condition Monitoring</h1>
 
-        <h1>⚡ Transformer Condition Monitoring</h1>
-
-        <p>
-            IoT Based Distribution Transformer Health Monitoring System
-        </p>
-
-    </div>
-
-    <div>
-
-        <b>LIVE MONITORING</b>
-
-    </div>
+    <p>
+        IoT Based Condition Monitoring System for Induction Motor
+    </p>
 
 </header>
 
 
+<main>
 
-<div class="dashboard">
+    <!-- HEALTH STATUS -->
+
+    <section class="health-section">
+
+        <h2>Motor Health Status</h2>
+
+        <div id="statusBox" class="status normal">
+            NORMAL
+        </div>
+
+        <p id="lastUpdate">
+            Last Update: --
+        </p>
+
+    </section>
 
 
-    <!-- STATUS -->
+    <!-- MOTOR PARAMETERS -->
 
-    <div class="status-box">
+    <section>
 
-        <div>
+        <h2>Real-Time Motor Parameters</h2>
 
-            <div class="status-title">
+        <div class="cards">
 
-                Transformer Health Status
+            <div class="card">
+
+                <h3>Voltage</h3>
+
+                <div class="value">
+                    <span id="voltage">230</span> V
+                </div>
 
             </div>
 
-            <small>
 
-                Real-time condition monitoring
+            <div class="card">
 
-            </small>
+                <h3>Current</h3>
+
+                <div class="value">
+                    <span id="current">3.5</span> A
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>Temperature</h3>
+
+                <div class="value">
+                    <span id="temperature">45</span> °C
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>Vibration</h3>
+
+                <div class="value">
+                    <span id="vibration">2.0</span> mm/s
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>Speed</h3>
+
+                <div class="value">
+                    <span id="speed">1440</span> RPM
+                </div>
+
+            </div>
 
         </div>
 
-
-        <div id="status"
-             class="status normal">
-
-            NORMAL
-
-        </div>
-
-    </div>
-
+    </section>
 
 
     <!-- CONDITION SIMULATOR -->
 
-    <h2 class="section-title">
+    <section class="simulator">
 
-        🧪 Condition Simulator
+        <h2>Motor Condition Simulator</h2>
 
-    </h2>
-
-
-    <div class="simulator">
-
-        <div class="sim-input">
-
-            <label>
-                Oil Temperature (°C)
-            </label>
-
-            <input
-                type="number"
-                id="simOil"
-                value="65"
-                min="40"
-                max="120">
-
-        </div>
+        <p>
+            Enter motor parameters to simulate different conditions.
+        </p>
 
 
-        <div class="sim-input">
+        <div class="inputs">
 
-            <label>
-                Winding Temperature (°C)
-            </label>
+            <div>
+                <label>Voltage (V)</label>
 
-            <input
-                type="number"
-                id="simWinding"
-                value="72"
-                min="40"
-                max="130">
-
-        </div>
+                <input
+                    type="number"
+                    id="simVoltage"
+                    value="230">
+            </div>
 
 
-        <div class="sim-input">
+            <div>
+                <label>Current (A)</label>
 
-            <label>
-                Vibration (mm/s)
-            </label>
+                <input
+                    type="number"
+                    id="simCurrent"
+                    value="3.5"
+                    step="0.1">
+            </div>
 
-            <input
-                type="number"
-                id="simVibration"
-                value="2.5"
-                min="0"
-                max="15"
-                step="0.1">
+
+            <div>
+                <label>Temperature (°C)</label>
+
+                <input
+                    type="number"
+                    id="simTemperature"
+                    value="45">
+            </div>
+
+
+            <div>
+                <label>Vibration (mm/s)</label>
+
+                <input
+                    type="number"
+                    id="simVibration"
+                    value="2"
+                    step="0.1">
+            </div>
+
+
+            <div>
+                <label>Speed (RPM)</label>
+
+                <input
+                    type="number"
+                    id="simSpeed"
+                    value="1440">
+            </div>
 
         </div>
 
 
         <button onclick="simulateCondition()">
-
             SIMULATE CONDITION
-
         </button>
 
-    </div>
-
+    </section>
 
 
     <!-- CONDITION RULES -->
 
-    <h2 class="section-title">
+    <section>
 
-        📋 Condition Rules
+        <h2>Condition Monitoring Rules</h2>
 
-    </h2>
+        <div class="rules">
 
+            <div class="rule normal-rule">
 
-    <div class="rules">
+                <h3>NORMAL</h3>
 
-        <div class="rule normal-rule">
-
-            <h3>🟢 NORMAL</h3>
-
-            <p>
-                Oil &lt; 70°C
-            </p>
-
-            <p>
-                Winding &lt; 80°C
-            </p>
-
-            <p>
-                Vibration &lt; 4 mm/s
-            </p>
-
-        </div>
-
-
-        <div class="rule warning-rule">
-
-            <h3>🟡 WARNING</h3>
-
-            <p>
-                Oil: 70–85°C
-            </p>
-
-            <p>
-                Winding: 80–95°C
-            </p>
-
-            <p>
-                Vibration: 4–7 mm/s
-            </p>
-
-        </div>
-
-
-        <div class="rule critical-rule">
-
-            <h3>🔴 CRITICAL</h3>
-
-            <p>
-                Oil &gt; 85°C
-            </p>
-
-            <p>
-                Winding &gt; 95°C
-            </p>
-
-            <p>
-                Vibration &gt; 7 mm/s
-            </p>
-
-        </div>
-
-    </div>
-
-
-
-    <!-- TEMPERATURE -->
-
-    <h2 class="section-title">
-
-        🌡 Temperature Monitoring
-
-    </h2>
-
-
-    <div class="cards">
-
-
-        <div class="card">
-
-            <h3>Oil Temperature</h3>
-
-            <div
-                class="value"
-                id="oilTemperature">
-
-                --
+                <p>Temperature &lt; 65°C</p>
+                <p>Vibration &lt; 4 mm/s</p>
+                <p>Current &lt; 5 A</p>
 
             </div>
 
-            <div class="unit">
-                °C
+
+            <div class="rule warning-rule">
+
+                <h3>WARNING</h3>
+
+                <p>Temperature 65–80°C</p>
+                <p>Vibration 4–7 mm/s</p>
+                <p>Current 5–6 A</p>
+
+            </div>
+
+
+            <div class="rule critical-rule">
+
+                <h3>CRITICAL</h3>
+
+                <p>Temperature &gt; 80°C</p>
+                <p>Vibration &gt; 7 mm/s</p>
+                <p>Current &gt; 6 A</p>
+
             </div>
 
         </div>
 
-
-
-        <div class="card">
-
-            <h3>Winding Temperature</h3>
-
-            <div
-                class="value"
-                id="windingTemperature">
-
-                --
-
-            </div>
-
-            <div class="unit">
-                °C
-            </div>
-
-        </div>
-
-
-
-        <div class="card">
-
-            <h3>Vibration</h3>
-
-            <div
-                class="value"
-                id="vibration">
-
-                --
-
-            </div>
-
-            <div class="unit">
-                mm/s
-            </div>
-
-        </div>
-
-
-
-        <div class="card">
-
-            <h3>Last Update</h3>
-
-            <div
-                class="value"
-                id="time">
-
-                --
-
-            </div>
-
-            <div class="unit">
-                Local Time
-            </div>
-
-        </div>
-
-    </div>
-
-
-
-    <!-- ELECTRICAL -->
-
-    <h2 class="section-title">
-
-        ⚡ Electrical Parameters
-
-    </h2>
-
-
-    <div class="cards">
-
-
-        <div class="card">
-
-            <h3>R Phase Voltage</h3>
-
-            <div
-                class="value"
-                id="voltageR">
-
-                --
-
-            </div>
-
-            <div class="unit">
-                V
-            </div>
-
-        </div>
-
-
-
-        <div class="card">
-
-            <h3>Y Phase Voltage</h3>
-
-            <div
-                class="value"
-                id="voltageY">
-
-                --
-
-            </div>
-
-            <div class="unit">
-                V
-            </div>
-
-        </div>
-
-
-
-        <div class="card">
-
-            <h3>B Phase Voltage</h3>
-
-            <div
-                class="value"
-                id="voltageB">
-
-                --
-
-            </div>
-
-            <div class="unit">
-                V
-            </div>
-
-        </div>
-
-
-
-        <div class="card">
-
-            <h3>R Phase Current</h3>
-
-            <div
-                class="value"
-                id="currentR">
-
-                --
-
-            </div>
-
-            <div class="unit">
-                A
-            </div>
-
-        </div>
-
-
-
-        <div class="card">
-
-            <h3>Y Phase Current</h3>
-
-            <div
-                class="value"
-                id="currentY">
-
-                --
-
-            </div>
-
-            <div class="unit">
-                A
-            </div>
-
-        </div>
-
-
-
-        <div class="card">
-
-            <h3>B Phase Current</h3>
-
-            <div
-                class="value"
-                id="currentB">
-
-                --
-
-            </div>
-
-            <div class="unit">
-                A
-            </div>
-
-        </div>
-
-    </div>
-
+    </section>
 
 
     <!-- GRAPHS -->
 
-    <h2 class="section-title">
+    <section>
 
-        📊 Real-Time Trends
+        <h2>Real-Time Trends</h2>
 
-    </h2>
+        <div class="charts">
 
+            <div class="chart-card">
 
-    <div class="graph-container">
+                <h3>Temperature Trend</h3>
 
+                <canvas id="temperatureChart"></canvas>
 
-        <div class="graph-card">
-
-            <h3>
-                Oil & Winding Temperature
-            </h3>
-
-            <canvas
-                id="temperatureChart">
-            </canvas>
-
-        </div>
+            </div>
 
 
+            <div class="chart-card">
 
-        <div class="graph-card">
+                <h3>Current Trend</h3>
 
-            <h3>
-                Phase Current
-            </h3>
+                <canvas id="currentChart"></canvas>
 
-            <canvas
-                id="currentChart">
-            </canvas>
+            </div>
 
         </div>
 
-    </div>
+    </section>
 
 
-    <footer>
-
-        Transformer Condition Monitoring System
-
-    </footer>
+</main>
 
 
-</div>
+<footer>
 
+    <p>
+        Induction Motor Condition Based Monitoring System
+    </p>
+
+    <p>
+        Electrical Engineering Final Year Project
+    </p>
+
+</footer>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script src="script.js"></script>
 

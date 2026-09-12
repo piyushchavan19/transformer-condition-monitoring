@@ -1,14 +1,11 @@
-const maxPoints = 15;
+const temperatureLabels = [];
+const temperatureData = [];
 
-let temperatureLabels = [];
-let oilData = [];
-let windingData = [];
+const currentLabels = [];
+const currentData = [];
 
-let currentLabels = [];
-let currentRData = [];
-let currentYData = [];
-let currentBData = [];
 
+// TEMPERATURE CHART
 
 const temperatureChart = new Chart(
     document.getElementById("temperatureChart"),
@@ -16,261 +13,140 @@ const temperatureChart = new Chart(
         type: "line",
 
         data: {
-
             labels: temperatureLabels,
 
             datasets: [
-
                 {
-                    label: "Oil Temperature °C",
-                    data: oilData,
-                    tension: 0.3
-                },
-
-                {
-                    label: "Winding Temperature °C",
-                    data: windingData,
+                    label: "Temperature (°C)",
+                    data: temperatureData,
                     tension: 0.3
                 }
-
             ]
-
         },
 
         options: {
-
             responsive: true,
 
-            maintainAspectRatio: false
-
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
         }
-
     }
 );
 
 
+// CURRENT CHART
 
 const currentChart = new Chart(
     document.getElementById("currentChart"),
     {
-
         type: "line",
 
         data: {
-
             labels: currentLabels,
 
             datasets: [
-
                 {
-                    label: "R Phase",
-                    data: currentRData,
-                    tension: 0.3
-                },
-
-                {
-                    label: "Y Phase",
-                    data: currentYData,
-                    tension: 0.3
-                },
-
-                {
-                    label: "B Phase",
-                    data: currentBData,
+                    label: "Current (A)",
+                    data: currentData,
                     tension: 0.3
                 }
-
             ]
-
         },
 
         options: {
-
             responsive: true,
 
-            maintainAspectRatio: false
-
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
         }
-
     }
 );
 
 
-
-// GET LIVE DATA
+// GET DATA
 
 async function getData() {
 
     try {
 
-        const response =
-            await fetch("/api/data");
+        const response = await fetch("/api/data");
 
-        const data =
-            await response.json();
+        const data = await response.json();
 
 
-        document.getElementById(
-            "oilTemperature"
-        ).textContent =
-            data.oilTemperature;
+        document.getElementById("voltage").textContent =
+            data.voltage;
 
+        document.getElementById("current").textContent =
+            data.current;
 
-        document.getElementById(
-            "windingTemperature"
-        ).textContent =
-            data.windingTemperature;
+        document.getElementById("temperature").textContent =
+            data.temperature;
 
-
-        document.getElementById(
-            "vibration"
-        ).textContent =
+        document.getElementById("vibration").textContent =
             data.vibration;
 
-
-        document.getElementById(
-            "voltageR"
-        ).textContent =
-            data.voltageR;
-
-
-        document.getElementById(
-            "voltageY"
-        ).textContent =
-            data.voltageY;
-
-
-        document.getElementById(
-            "voltageB"
-        ).textContent =
-            data.voltageB;
-
-
-        document.getElementById(
-            "currentR"
-        ).textContent =
-            data.currentR;
-
-
-        document.getElementById(
-            "currentY"
-        ).textContent =
-            data.currentY;
-
-
-        document.getElementById(
-            "currentB"
-        ).textContent =
-            data.currentB;
-
-
-        document.getElementById(
-            "time"
-        ).textContent =
-            new Date().toLocaleTimeString();
-
+        document.getElementById("speed").textContent =
+            data.speed;
 
 
         // STATUS
 
-        const statusElement =
-            document.getElementById("status");
+        const statusBox =
+            document.getElementById("statusBox");
+
+        statusBox.textContent = data.status;
+
+        statusBox.className =
+            "status " + data.status.toLowerCase();
 
 
-        statusElement.textContent =
-            data.status;
+        document.getElementById("lastUpdate").textContent =
+            "Last Update: " + new Date().toLocaleTimeString();
 
 
-        statusElement.className =
-            "status " +
-            data.status.toLowerCase();
+        // CHART DATA
 
-
-
-        // TIME
-
-        const currentTime =
+        const time =
             new Date().toLocaleTimeString();
 
 
-
-        // TEMPERATURE GRAPH
-
-        temperatureLabels.push(
-            currentTime
-        );
-
-        oilData.push(
-            data.oilTemperature
-        );
-
-        windingData.push(
-            data.windingTemperature
-        );
+        temperatureLabels.push(time);
+        temperatureData.push(data.temperature);
 
 
-        if (
-            temperatureLabels.length >
-            maxPoints
-        ) {
+        currentLabels.push(time);
+        currentData.push(data.current);
 
+
+        // Keep last 15 points
+
+        if (temperatureLabels.length > 15) {
             temperatureLabels.shift();
+            temperatureData.shift();
+        }
 
-            oilData.shift();
-
-            windingData.shift();
-
+        if (currentLabels.length > 15) {
+            currentLabels.shift();
+            currentData.shift();
         }
 
 
         temperatureChart.update();
-
-
-
-        // CURRENT GRAPH
-
-        currentLabels.push(
-            currentTime
-        );
-
-        currentRData.push(
-            data.currentR
-        );
-
-        currentYData.push(
-            data.currentY
-        );
-
-        currentBData.push(
-            data.currentB
-        );
-
-
-        if (
-            currentLabels.length >
-            maxPoints
-        ) {
-
-            currentLabels.shift();
-
-            currentRData.shift();
-
-            currentYData.shift();
-
-            currentBData.shift();
-
-        }
-
-
         currentChart.update();
-
 
     }
 
     catch (error) {
 
         console.error(
-            "Connection error:",
+            "Error getting motor data:",
             error
         );
 
@@ -279,78 +155,65 @@ async function getData() {
 }
 
 
-
-// CONDITION SIMULATOR
+// SIMULATE CONDITION
 
 async function simulateCondition() {
 
-    const oil =
-        Number(
-            document.getElementById(
-                "simOil"
-            ).value
-        );
+    const voltage =
+        Number(document.getElementById("simVoltage").value);
 
+    const current =
+        Number(document.getElementById("simCurrent").value);
 
-    const winding =
-        Number(
-            document.getElementById(
-                "simWinding"
-            ).value
-        );
-
+    const temperature =
+        Number(document.getElementById("simTemperature").value);
 
     const vibration =
-        Number(
-            document.getElementById(
-                "simVibration"
-            ).value
-        );
+        Number(document.getElementById("simVibration").value);
 
+    const speed =
+        Number(document.getElementById("simSpeed").value);
 
 
     try {
 
-        const response =
-            await fetch(
-                "/api/simulate",
-                {
+        const response = await fetch(
+            "/api/simulate",
+            {
+                method: "POST",
 
-                    method: "POST",
+                headers: {
+                    "Content-Type":
+                        "application/json"
+                },
 
-                    headers: {
-                        "Content-Type":
-                            "application/json"
-                    },
+                body: JSON.stringify({
 
-                    body: JSON.stringify({
+                    voltage: voltage,
 
-                        oilTemperature: oil,
+                    current: current,
 
-                        windingTemperature:
-                            winding,
+                    temperature: temperature,
 
-                        vibration:
-                            vibration
+                    vibration: vibration,
 
-                    })
+                    speed: speed
 
-                }
-            );
+                })
+            }
+        );
 
 
         const data =
             await response.json();
 
-
         console.log(
-            "Simulated condition:",
+            "Motor condition simulated:",
             data
         );
 
 
         getData();
-
 
     }
 
@@ -366,7 +229,11 @@ async function simulateCondition() {
 }
 
 
-
-// FIRST UPDATE
+// START MONITORING
 
 getData();
+
+setInterval(
+    getData,
+    2000
+);
